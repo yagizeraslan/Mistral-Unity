@@ -42,8 +42,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1e2f3a4b5c6789012345678abcdef34, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: e1f2a3b4c5d6789012345678abcdef40, type: 2}
   model: 2
   useStreaming: 1
@@ -51,7 +51,7 @@ MonoBehaviour:
   sendButton: {fileID: 0}
   messageContainer: {fileID: 0}
   scrollRect: {fileID: 0}
-  sentMessagePrefab: {fileID: 8660877164928630359, guid: f1a2b3c4d5e6789012345678abcdef50, type: 3}
-  receivedMessagePrefab: {fileID: 8460455656148362884, guid: f1a2b3c4d5e6789012345678abcdef51, type: 3}
+  sentMessagePrefab: {fileID: 8660877164928630358, guid: f1a2b3c4d5e6789012345678abcdef50, type: 3}
+  receivedMessagePrefab: {fileID: 961534450149497042, guid: f1a2b3c4d5e6789012345678abcdef51, type: 3}
   maxUIMessages: 100
   trimToMessages: 70
