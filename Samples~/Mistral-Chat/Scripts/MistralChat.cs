@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using YagizEraslan.Mistral.Unity;
 
+/// <summary>
+/// Sample MonoBehaviour demonstrating integration with the Mistral API.
+/// Uses HistoryTrimmer for DRY-compliant UI message management.
+/// </summary>
 public class MistralChat : MonoBehaviour
 {
     [Header("Configuration")]
@@ -22,8 +26,8 @@ public class MistralChat : MonoBehaviour
     [SerializeField] private GameObject receivedMessagePrefab;
 
     [Header("Memory Management")]
-    [SerializeField] private int maxUIMessages = 100;
-    [SerializeField] private int trimToMessages = 70;
+    [SerializeField] private int maxUIMessages = ApiConstants.DEFAULT_MAX_UI_MESSAGES;
+    [SerializeField] private int trimToMessages = ApiConstants.DEFAULT_UI_TRIM_COUNT;
 
     private MistralChatController controller;
     private TMP_Text activeStreamingText;
@@ -33,7 +37,7 @@ public class MistralChat : MonoBehaviour
     {
         if (config == null)
         {
-            Debug.LogError("[MistralChat] MistralSettings config is not assigned!");
+            Debug.LogError($"{ApiConstants.LOG_PREFIX_CHAT} MistralSettings config is not assigned!");
             return;
         }
 
@@ -91,23 +95,13 @@ public class MistralChat : MonoBehaviour
 
     private void HandleError(string error)
     {
-        Debug.LogError($"[MistralChat] {error}");
+        Debug.LogError($"{ApiConstants.LOG_PREFIX_CHAT} {error}");
     }
 
     private void TrimUIMessagesIfNeeded()
     {
-        if (messageGameObjects.Count > maxUIMessages)
-        {
-            int messagesToRemove = messageGameObjects.Count - trimToMessages;
-            for (int i = 0; i < messagesToRemove; i++)
-            {
-                if (messageGameObjects[i] != null)
-                {
-                    Destroy(messageGameObjects[i]);
-                }
-            }
-            messageGameObjects.RemoveRange(0, messagesToRemove);
-        }
+        // Use shared utility for DRY compliance
+        HistoryTrimmer.TrimGameObjectsIfNeeded(messageGameObjects, maxUIMessages, trimToMessages);
     }
 
     private void ScrollToBottom()
@@ -116,6 +110,9 @@ public class MistralChat : MonoBehaviour
         scrollRect.verticalNormalizedPosition = 0f;
     }
 
+    /// <summary>
+    /// Clears all chat messages and history.
+    /// </summary>
     public void ClearChat()
     {
         controller?.ClearHistory();
